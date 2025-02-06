@@ -1,5 +1,5 @@
 from threading import Thread
-from typing import Callable, Tuple
+from collections.abc import Callable
 import time
 
 
@@ -26,7 +26,7 @@ class EngineThread(Thread):
         self.stop: bool = False
         self.paused: bool = False
         self.targets: list[Callable[[], None]] = [target]
-        self.queue: list[Tuple[Callable[[], None], int]] = []
+        self.queue: list[tuple[Callable[[], None], int]] = []
         super().__init__(target=lambda:self._call(target))
     
     def _call(self, target: Callable[[],None]) -> None:
@@ -50,7 +50,7 @@ class EngineThread(Thread):
         del self.targets[index]
 
 
-class EngineQueue(Thread):
+class EngineQueue(Thread): # EngineQueue does not keep order, due to limitations with EngineThread
     def __init__(self, q: Callable[[], None], delay: int) -> None:
         super().__init__(target=lambda:self._call(q, delay))
     def _call(self, q: Callable[[], None], delay: int) -> None:
@@ -67,6 +67,6 @@ test.queue(lambda:print("1s", end=""), 1)
 test.queue(lambda:print("1s", end=""), 1)
 test.queue(lambda:print("1s", end=""), 1)
 test.queue(lambda:print("1s", end=""), 1)
-test.queue(lambda:print("1s", end=""), 1)
+test.queue(lambda:print("1s"), 1)
 time.sleep(2)
 test.stop()
