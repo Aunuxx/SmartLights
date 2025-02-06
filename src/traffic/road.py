@@ -1,5 +1,5 @@
-from SmartLights.traffic.Constants import RoadWays, LightColors, Direction
-from threading import Thread, Event
+from SmartLights.src.traffic.constants import RoadWays, LightColors, Direction
+from threading import Thread
 from collections.abc import Callable
 import time
 
