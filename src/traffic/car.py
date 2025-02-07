@@ -1,5 +1,5 @@
-from SmartLights.src.traffic.Constants import Direction
-from SmartLights.traffic.Road import Endpoint
+from SmartLights.src.traffic.constants import Direction
+from SmartLights.src.traffic.road import Endpoint
 import random
 from math import atan2, degrees
 
