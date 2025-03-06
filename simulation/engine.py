@@ -5,16 +5,16 @@ import time
 
 class Engine:
     """
-    A simplified layer between main and EngineThread/EngineQueue.\n
+    A simplified layer between main and _EngineThread/_EngineQueue.\n
     When passing functions with arguments use ```lambda:```.\n
     When queuing functions know functions that end at the same time
     have a tendency to change when they end at each program run.
     If a function needs to end after another, delaying the function by
-    0.1 may fix the issue
+    0.1 should fix the issue
     """
 
     def __init__(self) -> None:
-        self.thread = EngineThread()
+        self.thread = _EngineThread()
     
     def start(self) -> None:
         self.thread.start()
@@ -36,7 +36,7 @@ class Engine:
 
 
 
-class EngineThread(Thread):
+class _EngineThread(Thread):
     def __init__(self) -> None:
         self.stop: bool = False
         self.paused: bool = False
@@ -51,7 +51,7 @@ class EngineThread(Thread):
             for t in self.targets:
                 t()
             for q in range(len(self.queue)-1,-1,-1):
-                tmp = EngineQueue(self.queue[q][0], self.queue[q][1])
+                tmp = _EngineQueue(self.queue[q][0], self.queue[q][1])
                 tmp.start()
                 del self.queue[q]
     
@@ -66,11 +66,11 @@ class EngineThread(Thread):
         del self.targets[index]
 
 
-class EngineQueue(Thread):
+class _EngineQueue(Thread):
     """
-    EngineQueue is managed by Engine.
+    _EngineQueue is managed by Engine.
 
-    EngineQueue does not keep order with items executed at the same time.
+    _EngineQueue does not keep order with items executed at the same time.
     If order is neccissary adding a slight delay will aid this issue.
     """
     def __init__(self, q: Callable[[], None], delay: int|float) -> None:
