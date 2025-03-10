@@ -1,6 +1,20 @@
 from enum import Enum
 
 
+class CardinalDirections(Enum):
+    N = 0
+    E = 1
+    S = 2
+    W = 3
+
+class CardinalRoadShapes(Enum):
+    NE = 0
+    NS = 1
+    NW = 2
+    SE = 3
+    SW = 4
+    WE = 5
+
 class RoadWays(Enum):
     W1A = "oneWayAway"
     W1B = "oneWayToward"
@@ -17,6 +31,6 @@ class LightColors(Enum):
 
 class Direction(Enum):
     NORTH = 0
-    WEST = 90
+    EAST = 90
     SOUTH = 180
-    EAST = 270
+    WEST = 270

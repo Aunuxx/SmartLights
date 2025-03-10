@@ -1,30 +1,28 @@
-from SmartLights.traffic.constants import RoadWays, Direction
+from SmartLights.traffic.constants import CardinalRoadShapes, RoadWays, Direction
+from SmartLights.traffic import Light
 
 
 
 class Lane:
-    def __init__(self) -> None:
-        pass
-
-
-
-class Side:
-    def __init__(self) -> None:
-        pass
-    def __str__(self) -> str:
-        return "test"
-
+    def __init__(self, turning: int, atIntersection: bool) -> None:
+        """
+        Turning is a cardinal direction
+        """
+        self.turning = turning
+        self.atIntersection = atIntersection
 
 
 class Road:
-    def __init__(self, ways:RoadWays, sides:list[Side]):
+    def __init__(self, shape: int, sides: tuple[list[Lane], list[Lane|None]]):
         """
-        ways: oneway or twoway, use traffic.Constants.RoadWays
-        sides[2]: list[0] should be the west side
+        See constants for shape enum.  
+        Sides tuple containing a tuple list of Lane,  
+        tuple[0] and tuple[tuple[0]] refers to the lowest cardinal direction.  
+            N: 0 | E: 1 | S: 2 | W: 3.
         """
-        self.ways = ways
+        self.shape = shape
         self.sides = sides
-        assert len(sides) <= 2
+
 
 
 class Endpoint:

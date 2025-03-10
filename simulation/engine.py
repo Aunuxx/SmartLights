@@ -43,7 +43,7 @@ class _EngineThread(Thread):
         self.targets: list[Callable[[], None]] = []
         self.queue: list[tuple[Callable[[], None], int|float]] = []
         super().__init__(target=lambda:self._call())
-    
+
     def _call(self) -> None:
         while self.stop == False:
             if self.paused:
@@ -54,14 +54,14 @@ class _EngineThread(Thread):
                 tmp = _EngineQueue(self.queue[q][0], self.queue[q][1])
                 tmp.start()
                 del self.queue[q]
-    
+
     def appendTarget(self, target: Callable[[],None]) -> int:
         self.targets.append(target)
         return len(self.targets)
-    
+
     def appendQueue(self, q: Callable[[],None], delay: int|float) -> None:
         self.queue.append((q, delay))
-    
+
     def removeTarget(self, index: int) -> None:
         del self.targets[index]
 
@@ -75,7 +75,7 @@ class _EngineQueue(Thread):
     """
     def __init__(self, q: Callable[[], None], delay: int|float) -> None:
         super().__init__(target=lambda:self._call(q, delay))
-    
+
     def _call(self, q: Callable[[], None], delay: int|float) -> None:
         time.sleep(delay)
         q()
