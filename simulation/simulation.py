@@ -1,6 +1,6 @@
 from typing import Self
 from SmartLights.simulation import Engine
-from SmartLights.traffic.road import Road, Lane
+from SmartLights.traffic.road import Road
 import numpy as np
 
 WIDTH = 10
