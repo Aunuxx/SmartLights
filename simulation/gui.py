@@ -6,7 +6,7 @@ from SmartLights.traffic import Light
 
 
 intersection = Intersection([Lane(0, 0), Lane(0, 1), Lane(0, 2)], (0, 0))
-road = Road(1, (3,1), (SIZE, 0))
+road = Road((SIZE, 0), (3,1), 1)
 # light = Light
 
 

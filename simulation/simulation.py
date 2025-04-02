@@ -1,3 +1,4 @@
+from __future__ import annotations
 from typing import Self
 from SmartLights.simulation import Engine
 from SmartLights.traffic.road import Road
@@ -21,7 +22,6 @@ CARDINAL = dict(
     S = 2,
     W = 3
 )
-
 
 class Simulation:
     def __init__(self) -> None:

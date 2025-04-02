@@ -1,2 +1,3 @@
 from .engine import Engine
-__all__ = ["Engine"]
+from .position import Pos, Position
+__all__ = ["Engine", "Pos", "Position"]

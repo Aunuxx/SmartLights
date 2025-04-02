@@ -1,7 +1,8 @@
-import dearpygui.dearpygui as dpg
-from SmartLights.simulation.draw import draw_backplate, draw_dotted_line
+import dearpygui.dearpygui as dpg # type: ignore[import-untyped]
+from SmartLights.simulation.draw import DrawObject, draw_dotted_line
 from SmartLights.traffic.constants import *
 from SmartLights.traffic import Light
+from SmartLights.simulation import Pos, Position
 
 
 
@@ -17,13 +18,14 @@ class Lane:
         dpg.draw_line((x+SIZE/2,y+SIZE/2), (x+ROTATIONX[lane.side], y+ROTATIONY[lane.side]), parent=app_data, thickness=LANESIZE, color=STREET)
 
 
-class Road:
-    def __init__(self, shape: int, sides: tuple[int, int], pos: tuple[int, int]):
+class Road(DrawObject):
+    def __init__(self, pos: Pos, sides: tuple[int, int], shape: int):
+        super().__init__(pos, 0)
         self.shape = shape
         self.sides = sides
-        self.pos = pos
-    def draw_road(road, app_data: int, x: int, y: int) -> None:
-        draw_backplate(app_data, x, y)
+    def draw_road(road, app_data: int, pos: Pos) -> None:
+        x, y = pos
+        road.draw_backplate(app_data)
         lanes = road.sides[0] + road.sides[1]
         roadThickness = lanes * LANESIZE
         offset = ((road.sides[0] * -LANESIZE) + (road.sides[1] * LANESIZE))/2
@@ -74,7 +76,7 @@ class Road:
                 if road.shape in W: # W
                     draw_dotted_line(app_data, (x+SIZE/2, y+SIZE/2+(LANESIZE*i)), 3, WHITE)
     def draw(self, app_data: int) -> None:
-        self.draw_road(app_data, self.pos[0], self.pos[1])
+        self.draw_road(app_data, self.pos)
 
 
 
@@ -83,31 +85,31 @@ class Endpoint:
     """
     Ends of roads to be used as points of action by carSpawner and carDespawner
     """
-    pos: tuple[int, int] = (0, 0)
+    pos: Pos
     spawnDirection: Direction
-    def __init__(self, pos: tuple[int, int], spawnDirection: Direction):
+    def __init__(self, pos: Pos, spawnDirection: Direction):
         self.pos = pos
         self.spawnDirection = spawnDirection
 
 
-class Intersection:
-    def __init__(self, lanes: list[Lane], pos: tuple[int, int]):
+class Intersection(DrawObject):
+    def __init__(self, lanes: list[Lane], pos: Pos):
+        super().__init__(pos, 0)
         self.lanes = lanes
-        self.pos = pos
     # def draw_lines(intersection, app_data: int, x: int, y: int) -> None:
     #     sides: list[int] = []
     #     for i in range(len(intersection.lanes)):
     #         if intersection.lanes[i].side not in sides:
     #             sides.append(intersection.lanes[i].side)
     #             draw_dotted_line(app_data, (x+SIZE/2, y+SIZE/2), intersection.lanes[i].side, YELLOW)
-    def draw_intersection(intersection, app_data: int, x: int, y: int) -> None:
-        draw_backplate(app_data, x, y)
-        dpg.draw_circle((x+SIZE/2,y+SIZE/2), SIZE/6, parent=app_data, color=STREET, fill=STREET)
+    def draw_intersection(intersection, app_data: int, pos: Pos) -> None:
+        intersection.draw_backplate(app_data)
+        dpg.draw_circle(pos+(SIZE/2, SIZE/2), SIZE/6, parent=app_data, color=STREET, fill=STREET)
         for lane in intersection.lanes:
-            lane.draw(app_data, x, y)
+            lane.draw(app_data, *pos)
         # intersection.draw_lines(app_data, x, y)
     def draw(self, app_data: int) -> None:
-        self.draw_intersection(app_data, self.pos[0], self.pos[1])
+        self.draw_intersection(app_data, self.pos)
 
 
 
