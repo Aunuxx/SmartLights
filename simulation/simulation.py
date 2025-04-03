@@ -1,5 +1,4 @@
 from __future__ import annotations
-from typing import Self
 from SmartLights.simulation import Engine
 from SmartLights.traffic.road import Road
 import numpy as np

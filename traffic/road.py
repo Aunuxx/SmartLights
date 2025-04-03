@@ -7,7 +7,7 @@ from SmartLights.simulation import Pos, Position
 
 
 class Lane(DrawObject):
-    def __init__(self, turning: int, side: int, isEntering: int) -> None:
+    def __init__(self, turning: tuple[int, int, int], side: int, isEntering: int) -> None:
         """
         Turning is a cardinal direction
         Side is the cardinal direction reletive to the center of the intersection
@@ -15,15 +15,18 @@ class Lane(DrawObject):
         self.turning = turning
         self.side = side
         self.isEntering = isEntering
+        if not self.isEntering:
+            assert self.turning == (0, 1, 0)
     
     def draw(lane, app_data: int) -> None:
         assert isinstance(lane.parent, DrawObject)
-        dpg.draw_line((*lane.parent.pos + SIZE/2,), (*lane.parent.pos + ROTATION[lane.side],), parent=app_data, thickness=LANESIZE, color=STREET)
+        # dpg.draw_line((*lane.parent.pos + SIZE/2,), (*lane.parent.pos + ROTATION[lane.side],), parent=app_data, thickness=LANESIZE, color=STREET)
+        dpg.draw_circle((*lane.parent.pos+SIZE/2-(LANESIZE, 0),), 2, parent=app_data, color=WHITE)
 
 
 class Road(DrawObject):
     def __init__(self, pos: Pos, sides: tuple[int, int], shape: int):
-        super().__init__(pos, 0)
+        super().__init__(pos)
         self.shape = shape
         self.sides = sides
     
@@ -101,8 +104,8 @@ class Road(DrawObject):
 
 
 class Intersection(DrawObject):
-    def __init__(self, lanes: list[Lane], pos: Pos):
-        super().__init__(pos, 0)
+    def __init__(self, pos: Pos, lanes: list[Lane]):
+        super().__init__(pos)
         for lane in lanes:
             self.add_child(lane)
     
@@ -137,7 +140,7 @@ class Intersection(DrawObject):
     def draw(self, app_data: int) -> None:
         self.draw_backplate(app_data)
         self.draw_intersection(app_data)
-        # super().draw(app_data)
+        super().draw(app_data)
 
 
 

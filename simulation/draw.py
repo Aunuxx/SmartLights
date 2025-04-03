@@ -1,11 +1,11 @@
 from __future__ import annotations
 from typing import Optional
 import dearpygui.dearpygui as dpg # type: ignore[import-untyped]
-from SmartLights.traffic.constants import SIZE, DOTTEDROTATION, GRASS
-from SmartLights.simulation import Pos, Position
+from ..traffic.constants import SIZE, DOTTEDROTATION, GRASS
+from . import Pos, Position
 
 class DrawObject:
-    def __init__(self, pos: Pos, zIndex: int,
+    def __init__(self, pos: Pos,
                 parent: Optional[DrawObject] = None,
                 children: Optional[list[DrawObject]] = None) -> None:
         if isinstance(pos, tuple):
