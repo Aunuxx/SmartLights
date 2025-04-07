@@ -1,0 +1,10 @@
+     A. What are 3 key functionalities you would like your package to handle?
+          i) Simulating and displaying an intersection
+         ii) Simulating vehicles
+        iii) Modifying light values to improve traffic flow
+     B.  Describe TDD briefly in your own words?
+        Building your code around a test file, a test file containing intended functionalities
+     C.  How are Regression Tests similar to Unit Tests?
+        Regression tests are using test files from before a code change to fix data
+     D.  What is the primary purpose for Regression Tests?
+        Maintaining the same functionalities as previous versions

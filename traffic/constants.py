@@ -26,7 +26,7 @@ DOTTEDROTATION: list[tuple[float,float]] = [
     (-SIZE/13, 0)
     ]
 
-CardinalRoadShape: list[int] = [1,2,4,8]
+CardinalRoadShape: list[int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
 #WSEN
 #0001 0010 0011 0100 0101 0110 0111 1000 1001 1010 1011 1100 1101 1110 1111
@@ -36,12 +36,12 @@ E = [2, 3, 6, 7, 10, 11, 14, 15]
 S = [4, 5, 6, 7, 12, 13, 14, 15]
 W = [8, 9, 10, 11, 12, 13, 14, 15]
 
-
 class CardinalRoadShapes(Enum):
     """
     Determine the shape of the road useing theses steps:  
     0 or 1 for cardinal direction, e.g. N+E+S = 0111 (WSEN)  
-    convert to dec, e.g. 0111 = 7 (8421)
+    convert to dec, e.g. 0111 = 7 (8421)  
+    you can use 0b0111 in substitute for int
     """
     N = 1 #
     E = 2 #

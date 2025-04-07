@@ -6,14 +6,19 @@ from SmartLights.traffic import Light
 
 
 intersection = Intersection((0, 0), [
-    Lane((1, 1, 0), 0, 1),
     Lane((0, 1, 0), 0, 0),
     Lane((0, 1, 0), 1, 0),
+    Lane((0, 1, 0), 2, 0),
+    Lane((1, 1, 0), 0, 1),
     Lane((1, 0, 1), 1, 1),
-    Lane((0, 1, 1), 2, 1),
-    Lane((0, 1, 0), 2, 0)]
-    )
-road = Road((SIZE, 0), (1,1), 3)
+    Lane((0, 1, 0), 2, 1),
+    Lane((0, 1, 0), 1, 1),
+    Lane((0, 1, 0), 1, 1)
+    ])
+
+
+
+# road = Road((SIZE, 0), (1,1), 3)
 # light = Light
 
 
@@ -32,7 +37,7 @@ with dpg.window(width=500, height=500, label="Tutorial"):
     # draw_intersection(drawlist, 0, 0, intersection)
     # draw_intersection(drawlist, SIZE, 0, intersection)
     # draw_road(drawlist, 0, 0, road)
-    road.draw(drawlist)
+
 
 
 
