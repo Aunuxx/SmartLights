@@ -11,9 +11,20 @@ intersection = Intersection((0, 0), [
     Lane((0, 1, 0), 2, 0),
     Lane((1, 1, 0), 0, 1),
     Lane((1, 0, 1), 1, 1),
-    Lane((0, 1, 0), 2, 1),
+    Lane((1, 0, 1), 1, 1),
+    Lane((1, 0, 1), 1, 1),
+    Lane((0, 1, 0), 2, 1)
+    ])
+intersection2 = Intersection((SIZE, 0), [
+    Lane((0, 1, 0), 0, 0),
+    Lane((0, 1, 0), 1, 0),
+    Lane((0, 1, 0), 2, 0),
+    Lane((0, 1, 0), 3, 0),
+    Lane((0, 1, 0), 3, 0),
+    Lane((0, 1, 0), 0, 1),
     Lane((0, 1, 0), 1, 1),
-    Lane((0, 1, 0), 1, 1)
+    Lane((0, 1, 0), 2, 1),
+    Lane((1, 0, 1), 3, 1)
     ])
 
 
@@ -34,6 +45,7 @@ with dpg.window(width=500, height=500, label="Tutorial"):
 
     drawlist = dpg.add_drawlist(width=500, height=500)
     intersection.draw(drawlist)
+    intersection2.draw(drawlist)
     # draw_intersection(drawlist, 0, 0, intersection)
     # draw_intersection(drawlist, SIZE, 0, intersection)
     # draw_road(drawlist, 0, 0, road)

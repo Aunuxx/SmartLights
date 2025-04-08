@@ -1,7 +1,7 @@
 from enum import Enum
 
-SIZE = 150
-LANESIZE = SIZE/8
+SIZE = 250
+LANESIZE = SIZE/10
 
 GRASS = (19,109,21)
 STREET = (50,50,50)

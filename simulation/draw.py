@@ -29,5 +29,5 @@ def draw_dotted_line(app_data: int, p1: Position, dir: int, color: tuple[int, ..
         p1 = p1 + DOTTEDROTATION[dir]
         prev = p1
         p1 = p1 + DOTTEDROTATION[dir]
-        dpg.draw_line((*prev,), (*p1,), parent=app_data, thickness=3, color=color)
+        dpg.draw_line((*prev,), (*p1,), parent=app_data, thickness=3.5, color=color)
 

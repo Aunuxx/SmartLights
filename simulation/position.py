@@ -20,11 +20,13 @@ class Position:
         if isinstance(a, float):
             return Position(self.pos[0] * a, self.pos[1] * a)
 
-    def __add__(self, a: tuple[float, float] | float) -> Position:
+    def __add__(self, a: tuple[float, float] | float | Position) -> Position:
         if isinstance(a, tuple):
             return Position(self.pos[0] + a[0], self.pos[1] + a[1])
         if isinstance(a, float):
             return Position(self.pos[0] + a, self.pos[1] + a)
+        if isinstance(a, Position):
+            return Position(self.pos[0] + a[0], self.pos[1] + a[1])
 
     def __sub__(self, a: tuple[float, float] | float) -> Position:
         if isinstance(a, tuple):
