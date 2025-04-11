@@ -70,23 +70,30 @@ class Road(DrawObject):
             for i in range(1,len(road.lanes[0]),1):
                 if road.shape in N: # N
                     draw_dotted_line(app_data, road.pos+SIZE/2+(LANESIZE*i, 0), 0, WHITE)
+                    dpg.draw_circle((*road.pos+SIZE/2+(LANESIZE*i, 0),), 5, parent=app_data, color=WHITE, fill=WHITE)
                 if road.shape in E: # E
                     draw_dotted_line(app_data, road.pos+SIZE/2+(0, LANESIZE*i), 1, WHITE)
+                    dpg.draw_circle((*road.pos+SIZE/2+(0, LANESIZE*i),), 5, parent=app_data, color=WHITE, fill=WHITE)
                 if road.shape in S: # S
                     draw_dotted_line(app_data, road.pos+SIZE/2+(-LANESIZE*i, 0), 2, WHITE)
+                    dpg.draw_circle((*road.pos+SIZE/2+(-LANESIZE*i, 0),), 5, parent=app_data, color=WHITE, fill=WHITE)
                 if road.shape in W: # W
                     draw_dotted_line(app_data, road.pos+SIZE/2+(0, -LANESIZE*i), 3, WHITE)
+                    dpg.draw_circle((*road.pos+SIZE/2+(0, -LANESIZE*i),), 5, parent=app_data, color=WHITE, fill=WHITE)
         if len(road.lanes[1]) > 1:
             for i in range(1,len(road.lanes[1]),1):
                 if road.shape in N: # N
                     draw_dotted_line(app_data, road.pos+SIZE/2-(LANESIZE*i, 0), 0, WHITE)
+                    dpg.draw_circle((*road.pos+SIZE/2-(LANESIZE*i, 0),), 5, parent=app_data, color=WHITE, fill=WHITE)
                 if road.shape in E: # E
                     draw_dotted_line(app_data, road.pos+SIZE/2-(0, LANESIZE*i), 1, WHITE)
                     dpg.draw_circle((*road.pos+SIZE/2+(LANESIZE*i, 0),), 5, parent=app_data, color=WHITE, fill=WHITE)
                 if road.shape in S: # S
                     draw_dotted_line(app_data, road.pos+SIZE/2-(-LANESIZE * i, 0), 2, WHITE)
+                    dpg.draw_circle((*road.pos+SIZE/2-(-LANESIZE * i, 0),), 5, parent=app_data, color=WHITE, fill=WHITE)
                 if road.shape in W: # W
                     draw_dotted_line(app_data, road.pos+SIZE/2-(0, -LANESIZE * i), 3, WHITE)
+                    dpg.draw_circle((*road.pos+SIZE/2-(0, -LANESIZE * i),), 5, parent=app_data, color=WHITE, fill=WHITE)
 
 
     def draw(self, app_data: int) -> None:
@@ -98,15 +105,13 @@ class Road(DrawObject):
 
 
 
-# class Endpoint:
-#     """
-#     Ends of roads to be used as points of action by carSpawner and carDespawner
-#     """
-#     pos: Pos
-#     spawnDirection: Direction
-#     def __init__(self, pos: Pos, spawnDirection: Direction):
-#         self.pos = pos
-#         self.spawnDirection = spawnDirection
+class Endpoint:
+    """
+    Ends of roads to be used as points of action by carSpawner and carDespawner
+    """
+    def __init__(self, pos: Position, spawnDirection: int):
+        self.pos = pos
+        self.spawnDirection = spawnDirection
 
 
 class Intersection(DrawObject):
@@ -150,7 +155,7 @@ class Intersection(DrawObject):
         dpg.draw_circle(p1, 5, parent=app_data, color=WHITE)
         dpg.draw_circle(p2, 5, parent=app_data, color=WHITE)
 
-        dpg.draw_rectangle(p1, p2, parent=app_data, color=STREET, fill=STREET)
+        # dpg.draw_rectangle(p1, p2, parent=app_data, color=STREET, fill=STREET)
 
 
 

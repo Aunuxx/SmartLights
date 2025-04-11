@@ -9,8 +9,6 @@ class Engine:
     When passing functions with arguments use ```lambda:```.\n
     When queuing functions know functions that end at the same time
     have a tendency to change when they end at each program run.
-    If a function needs to end after another, delaying the function by
-    0.1 should fix the issue
     """
 
     def __init__(self) -> None:
@@ -88,11 +86,11 @@ if __name__ == "__main__":
     test.add(lambda:print(".", end=""))
     test.add(lambda:time.sleep(0.01))
     test.start()
-    test.queue(lambda:print("1s", end=""), 1)
-    test.queue(lambda:print("1s", end=""), 1)
-    test.queue(lambda:print("1s", end=""), 1)
-    test.queue(lambda:print("1s", end=""), 1)
-    test.queue(lambda:print("1s", end=""), 1)
-    test.queue(lambda:print("1s"), 1.01)
+    # test.queue(lambda:print("1s", end=""), 1)
+    # test.queue(lambda:print("1s", end=""), 1)
+    # test.queue(lambda:print("1s", end=""), 1)
+    # test.queue(lambda:print("1s", end=""), 1)
+    # test.queue(lambda:print("1s", end=""), 1)
+    # test.queue(lambda:print("1s"), 1.01)
     time.sleep(2)
     test.stop()

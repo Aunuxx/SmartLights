@@ -9,16 +9,13 @@ WHITE = (255,255,255)
 WHITEFADED = (255,255,255,128)
 YELLOW = (255,255,0)
 
-# ROTATIONX: list[float] = [SIZE/2, SIZE, SIZE/2, 0]
-# ROTATIONY: list[float] = [0, SIZE/2, SIZE, SIZE/2]
 ROTATION: list[tuple[float, float]] = [
     (SIZE/2, 0),
     (SIZE, SIZE/2),
     (SIZE/2, SIZE),
     (0, SIZE/2)
     ]
-# DOTTEDROTATIONX: list[float] = [0, SIZE/13, 0, -SIZE/13]
-# DOTTEDROTATIONY: list[float] = [-SIZE/13, 0, SIZE/13, 0]
+
 DOTTEDROTATION: list[tuple[float,float]] = [
     (0, -SIZE/13), 
     (SIZE/13, 0), 
