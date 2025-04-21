@@ -1,29 +1,48 @@
 from __future__ import annotations
 from typing import Optional
+from collections.abc import Callable
 import dearpygui.dearpygui as dpg # type: ignore[import-untyped]
 from SmartLights.traffic.constants import SIZE, DOTTEDROTATION, GRASS
 from SmartLights.simulation import Pos, Position
 
-class DrawObject:
-    def __init__(self, pos: Pos,
+
+class Drawable:
+    """
+    Abstract class
+    """
+    def __init__(self) -> None:
+        pass
+    def draw(self, app_data: int | str) -> int:
+        return 0
+
+class dpgDrawObject(Drawable):
+    def __init__(self, func: Callable[[], None]) -> None:
+        self.func = func
+    def draw(self, app_data: int | str) -> int:
+        self.func()
+        return 0
+
+class DrawObject(Drawable):
+    def __init__(self, pos: Pos = (-1, -1),
                 parent: Optional[DrawObject] = None,
                 children: Optional[list[DrawObject]] = None) -> None:
-        if isinstance(pos, tuple):
-            pos = Position(*pos)
-        self.pos: Position = pos
+        self.pos: Position = Position(pos[0], pos[1])
         self.parent = parent
         self.children = children if children is not None else []
-    def draw(self, app_data: int) -> None:
+    def draw(self, app_data: int | str) -> int:
         for child in self.children:
             child.draw(app_data)
+        return 0
     def add_child(self, child: DrawObject) -> None:
         child.parent = self
         self.children.append(child)
-    def draw_backplate(self, app_data: int) -> None:
-        dpg.draw_rectangle((*self.pos,), (*self.pos+(SIZE,SIZE),), parent=app_data, color=GRASS, fill=GRASS)
-        # print(self.pos, self.pos[0], self.pos[1])
+    def draw_backplate(self, app_data: int | str) -> int:
+        o = dpg.draw_rectangle((*self.pos,), (*self.pos+(SIZE,SIZE),), parent=app_data, color=GRASS, fill=GRASS)
+        if isinstance(o, int):
+            return o
+        return 0
 
-def draw_dotted_line(app_data: int, p1: Position, dir: int, color: tuple[int, ...]) -> None:
+def draw_dotted_line(app_data: int | str, p1: Position, dir: int, color: tuple[int, ...]) -> None:
     dpg.draw_circle((*p1,), 2, parent=app_data, color=color, fill=color)
     for i in range(3):
         p1 = p1 + DOTTEDROTATION[dir]

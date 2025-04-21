@@ -20,8 +20,9 @@ class Lane(DrawObject):
         if not self.isEntering:
             assert self.turning == (0, 1, 0)
     
-    def draw(lane, app_data: int) -> None:
+    def draw(lane, app_data: int | str) -> int:
         assert isinstance(lane.parent, DrawObject)
+        return 0
         # dpg.draw_line((*lane.parent.pos + SIZE/2,), (*lane.parent.pos + ROTATION[lane.side],), parent=app_data, thickness=LANESIZE, color=STREET)
         # dpg.draw_circle((*lane.parent.pos+SIZE/2-(LANESIZE, 0),), 2, parent=app_data, color=WHITE)
 
@@ -37,7 +38,7 @@ class Road(DrawObject):
         self.cover: tuple[Position, Position] # Cover to help intersection draws
         self.largest: float = 0.0 # Works with cover
 
-    def draw_road(road, app_data: int) -> None:
+    def draw_road(road, app_data: int | str) -> None:
         if len(road.lanes[0]) + len(road.lanes[1]) == 0:
             return
         roadThickness = (len(road.lanes[0]) + len(road.lanes[1])) * LANESIZE
@@ -53,7 +54,7 @@ class Road(DrawObject):
         if road.shape in W: # W
             dpg.draw_line((*road.pos+SIZE/2+(0,-offset),), (*road.pos+ROTATION[3]+(0, -offset),), parent=app_data, thickness=roadThickness, color=STREET)
 
-    def draw_lines(road, app_data: int) -> None:
+    def draw_lines(road, app_data: int | str) -> None:
         # Yellow Lines
         if len(road.lanes[0]) != 0 and len(road.lanes[1]) != 0:
             if road.shape in N: # N
@@ -96,11 +97,12 @@ class Road(DrawObject):
                     dpg.draw_circle((*road.pos+SIZE/2-(0, -LANESIZE * i),), 5, parent=app_data, color=WHITE, fill=WHITE)
 
 
-    def draw(self, app_data: int) -> None:
-        self.draw_backplate(app_data)
+    def draw(self, app_data: int | str) -> int:
+        o = self.draw_backplate(app_data)
         self.draw_road(app_data)
         self.draw_lines(app_data)
         super().draw(app_data)
+        return o
 
 
 
@@ -115,12 +117,12 @@ class Endpoint:
 
 
 class Intersection(DrawObject):
-    def __init__(self, pos: Pos, lanes: list[Lane]):
-        super().__init__(pos)
+    def __init__(self, lanes: list[Lane]):
+        super().__init__()
         for lane in lanes:
-            self.add_child(lane)
+            self.add_child(lane) # keep to make lane.parent = self
 
-    def draw_intersection(self, app_data: int) -> None:
+    def draw_intersection(self, app_data: int | str) -> None:
         lanes: list[list[list[Lane]]] = [[[],[]], [[],[]], [[],[]], [[],[]]]
         for lane in self.children:
             if isinstance(lane, Lane):
@@ -147,22 +149,21 @@ class Intersection(DrawObject):
         if len(lanes[1][0]) <= len(lanes[3][1]):
             p2 = (p2[0], len(lanes[3][1]))
 
-        print(lanes)
-
         p1 = (self.pos[0] + SIZE/2 + p1[0] * LANESIZE, self.pos[1] + SIZE/2 + p1[1] * LANESIZE)
         p2 = (self.pos[0] + SIZE/2 + p2[0] * LANESIZE, self.pos[1] + SIZE/2 + p2[1] * LANESIZE)
 
         dpg.draw_circle(p1, 5, parent=app_data, color=WHITE)
         dpg.draw_circle(p2, 5, parent=app_data, color=WHITE)
 
-        # dpg.draw_rectangle(p1, p2, parent=app_data, color=STREET, fill=STREET)
+        dpg.draw_rectangle(p1, p2, parent=app_data, color=STREET, fill=STREET)
 
 
 
-    def draw(self, app_data: int) -> None:
-        self.draw_backplate(app_data)
+    def draw(self, app_data: int | str) -> int:
+        o = self.draw_backplate(app_data)
         self.draw_intersection(app_data)
         super().draw(app_data)
+        return o
 
 
 
