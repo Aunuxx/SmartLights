@@ -7,6 +7,7 @@ from SmartLights.traffic import Light
 from SmartLights.simulation.simulation import Simulation
 from SmartLights.simulation import Position
 from SmartLights.simulation.draw import DrawObject, Drawable, dpgDrawObject
+from SmartLights.simulation.file_manager import FileManager
 
 WINDOWWIDTH = 1000
 WINDOWHEIGHT = 1000
@@ -32,6 +33,7 @@ drawqueue: list[Drawable] = []
 
 sim = Simulation()
 
+fm = FileManager()
 
 sim.set_cell((0,0), Intersection([
     Lane((0, 1, 0), 0, 0),
@@ -74,6 +76,10 @@ def get_item_cell(user_data: int | str = "context_popup") -> tuple[int, int]:
 def draw_update(app_data: int) -> None:
     dpg.draw_rectangle((0,0), (WINDOWWIDTH, WINDOWHEIGHT-100), color=(70, 70, 70), fill=(70, 70, 70), parent=app_data)
     sim.draw(app_data)
+    for a in sim.grid:
+        for b in a:
+            if isinstance(b, Intersection):
+                fm.write_intersection(b)
     for d in drawqueue:
         d.draw(app_data)
 
@@ -93,7 +99,7 @@ def intersection_popup() -> None:
 def create_intersection() -> None:
     cur = get_item_cell()
     intersection = Intersection([])
-    sim[cur[0]][cur[1]] = intersection
+    sim.set_cell(cur, intersection)
     intersection_popup()
 
 def endpoint_popup() -> None:

@@ -2,6 +2,9 @@ from __future__ import annotations
 from typing import Iterator
 
 class Position:
+    """
+    Effectivaly a tuple[float, float] but with extra math to assist in large computations.
+    """
     def __init__(self, x: float, y: float):
         self.pos: tuple[float, float] = (x, y)
 

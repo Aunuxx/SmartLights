@@ -36,62 +36,55 @@ class Road(DrawObject):
         self.cover: tuple[Position, Position] # Cover to help intersection draws
         self.largest: float = 0.0 # Works with cover
 
-    def draw_road(road, app_data: int | str) -> None:
-        if len(road.lanes[0]) + len(road.lanes[1]) == 0:
+    def draw_road(self, app_data: int | str) -> None:
+        if len(self.lanes[0]) + len(self.lanes[1]) == 0:
             return
-        roadThickness = (len(road.lanes[0]) + len(road.lanes[1])) * LANESIZE
-        offset = ((len(road.lanes[0]) * LANESIZE) + (len(road.lanes[1]) * -LANESIZE))/2
+        roadThickness = (len(self.lanes[0]) + len(self.lanes[1])) * LANESIZE
+        offset = ((len(self.lanes[0]) * LANESIZE) + (len(self.lanes[1]) * -LANESIZE))/2
 
         # Roads
-        if road.shape in N: # N
-            dpg.draw_line((*road.pos+SIZE/2+(offset,0),), (*road.pos+ROTATION[0]+(offset, 0),), parent=app_data, thickness=roadThickness, color=STREET)
-        if road.shape in E: # E
-            dpg.draw_line((*road.pos+SIZE/2+(0,offset),), (*road.pos+ROTATION[1]+(0, offset),), parent=app_data, thickness=roadThickness, color=STREET)
-        if road.shape in S: # S
-            dpg.draw_line((*road.pos+SIZE/2+(-offset,0),), (*road.pos+ROTATION[2]+(-offset, 0),), parent=app_data, thickness=roadThickness, color=STREET)
-        if road.shape in W: # W
-            dpg.draw_line((*road.pos+SIZE/2+(0,-offset),), (*road.pos+ROTATION[3]+(0, -offset),), parent=app_data, thickness=roadThickness, color=STREET)
+        if self.shape in N: # N
+            dpg.draw_line((*self.pos+SIZE/2+(offset,0),), (*self.pos+ROTATION[0]+(offset, 0),), parent=app_data, thickness=roadThickness, color=STREET)
+        if self.shape in E: # E
+            dpg.draw_line((*self.pos+SIZE/2+(0,offset),), (*self.pos+ROTATION[1]+(0, offset),), parent=app_data, thickness=roadThickness, color=STREET)
+        if self.shape in S: # S
+            dpg.draw_line((*self.pos+SIZE/2+(-offset,0),), (*self.pos+ROTATION[2]+(-offset, 0),), parent=app_data, thickness=roadThickness, color=STREET)
+        if self.shape in W: # W
+            dpg.draw_line((*self.pos+SIZE/2+(0,-offset),), (*self.pos+ROTATION[3]+(0, -offset),), parent=app_data, thickness=roadThickness, color=STREET)
 
-    def draw_lines(road, app_data: int | str) -> None:
+    def draw_lines(self, app_data: int | str) -> None:
         # Yellow Lines
-        if len(road.lanes[0]) != 0 and len(road.lanes[1]) != 0:
-            if road.shape in N: # N
-                draw_dotted_line(app_data, road.pos+SIZE/2, 0, YELLOW)
-            if road.shape in E: # E
-                draw_dotted_line(app_data, road.pos+SIZE/2, 1, YELLOW)
-            if road.shape in S: # S
-                draw_dotted_line(app_data, road.pos+SIZE/2, 2, YELLOW)
-            if road.shape in W: # W
-                draw_dotted_line(app_data, road.pos+SIZE/2, 3, YELLOW)
+        if len(self.lanes[0]) != 0 and len(self.lanes[1]) != 0:
+            if self.shape in N: # N
+                draw_dotted_line(app_data, self.pos+SIZE/2, 0, YELLOW)
+            if self.shape in E: # E
+                draw_dotted_line(app_data, self.pos+SIZE/2, 1, YELLOW)
+            if self.shape in S: # S
+                draw_dotted_line(app_data, self.pos+SIZE/2, 2, YELLOW)
+            if self.shape in W: # W
+                draw_dotted_line(app_data, self.pos+SIZE/2, 3, YELLOW)
         
         # White Lines
-        if len(road.lanes[0]) > 1:
-            for i in range(1,len(road.lanes[0]),1):
-                north = (SIZE/2+len(road.lanes[0])*LANESIZE)-LANESIZE/2
-                east = (SIZE/2+len(road.lanes[0])*LANESIZE)-LANESIZE/2
-                south = (SIZE/2-len(road.lanes[0])*LANESIZE)+LANESIZE/2
-                west = (SIZE/2-len(road.lanes[0])*LANESIZE)+LANESIZE/2
-                if road.shape in N: # N
-                    draw_dotted_line(app_data, road.pos+SIZE/2+(LANESIZE*i, 0), 0, WHITE)
-                    print("test")
-                    dpg.draw_circle((*road.pos+(south, west),),
-                                    radius=10,color=(255,0,0),fill=(255,255,0), parent=app_data)
-                if road.shape in E: # E
-                    draw_dotted_line(app_data, road.pos+SIZE/2+(0, LANESIZE*i), 1, WHITE)
-                if road.shape in S: # S
-                    draw_dotted_line(app_data, road.pos+SIZE/2+(-LANESIZE*i, 0), 2, WHITE)
-                if road.shape in W: # W
-                    draw_dotted_line(app_data, road.pos+SIZE/2+(0, -LANESIZE*i), 3, WHITE)
-        if len(road.lanes[1]) > 1:
-            for i in range(1,len(road.lanes[1]),1):
-                if road.shape in N: # N
-                    draw_dotted_line(app_data, road.pos+SIZE/2-(LANESIZE*i, 0), 0, WHITE)
-                if road.shape in E: # E
-                    draw_dotted_line(app_data, road.pos+SIZE/2-(0, LANESIZE*i), 1, WHITE)
-                if road.shape in S: # S
-                    draw_dotted_line(app_data, road.pos+SIZE/2-(-LANESIZE * i, 0), 2, WHITE)
-                if road.shape in W: # W
-                    draw_dotted_line(app_data, road.pos+SIZE/2-(0, -LANESIZE * i), 3, WHITE)
+        if len(self.lanes[0]) > 1:
+            for i in range(1,len(self.lanes[0]),1):
+                if self.shape in N: # N
+                    draw_dotted_line(app_data, self.pos+SIZE/2+(LANESIZE*i, 0), 0, WHITE)
+                if self.shape in E: # E
+                    draw_dotted_line(app_data, self.pos+SIZE/2+(0, LANESIZE*i), 1, WHITE)
+                if self.shape in S: # S
+                    draw_dotted_line(app_data, self.pos+SIZE/2+(-LANESIZE*i, 0), 2, WHITE)
+                if self.shape in W: # W
+                    draw_dotted_line(app_data, self.pos+SIZE/2+(0, -LANESIZE*i), 3, WHITE)
+        if len(self.lanes[1]) > 1:
+            for i in range(1,len(self.lanes[1]),1):
+                if self.shape in N: # N
+                    draw_dotted_line(app_data, self.pos+SIZE/2-(LANESIZE*i, 0), 0, WHITE)
+                if self.shape in E: # E
+                    draw_dotted_line(app_data, self.pos+SIZE/2-(0, LANESIZE*i), 1, WHITE)
+                if self.shape in S: # S
+                    draw_dotted_line(app_data, self.pos+SIZE/2-(-LANESIZE * i, 0), 2, WHITE)
+                if self.shape in W: # W
+                    draw_dotted_line(app_data, self.pos+SIZE/2-(0, -LANESIZE * i), 3, WHITE)
 
 
     def draw(self, app_data: int | str) -> int:
@@ -167,6 +160,26 @@ class Intersection(DrawObject):
         p2 = (self.pos[0] + SIZE/2 + p2[0] * LANESIZE, self.pos[1] + SIZE/2 + p2[1] * LANESIZE)
 
         dpg.draw_rectangle(p1, p2, parent=app_data, color=STREET, fill=STREET) # Cover rectangle
+        
+        # for side in range(4):
+        #     for a in range(1, len(lanes[side][1]) + 1):
+        #         offset = a * LANESIZE - LANESIZE / 2
+        #         opposing = len(lanes[side][0]) * LANESIZE
+
+        #         if side == 0:  # N
+        #             x = p1[0] + offset
+        #             y = p1[1] - LANESIZE / 2
+        #         elif side == 1:  # E
+        #             x = p2[0] + LANESIZE / 2
+        #             y = p1[1] + offset
+        #         elif side == 2:  # S
+        #             x = p1[0] + offset
+        #             y = p2[1] + LANESIZE / 2
+        #         elif side == 3:  # W
+        #             x = p1[0] - LANESIZE / 2
+        #             y = p1[1] + offset
+
+        #         dpg.draw_circle((x, y), radius=10, color=(255, 0, 0), fill=(255, 255, 0), parent=app_data)
 
 
 

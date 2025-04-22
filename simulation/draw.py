@@ -6,7 +6,7 @@ from SmartLights.traffic.constants import SIZE, DOTTEDROTATION, GRASS
 from SmartLights.simulation import Pos, Position
 
 
-class Drawable:
+class Drawable: # abstract class for dpgDrawObject and DrawObject to work in draw_list in gui
     """
     Abstract class
     """
@@ -15,14 +15,14 @@ class Drawable:
     def draw(self, app_data: int | str) -> int:
         return 0
 
-class dpgDrawObject(Drawable):
+class dpgDrawObject(Drawable): # Holds a dpg command for draw_list in gui
     def __init__(self, func: Callable[[], None]) -> None:
         self.func = func
     def draw(self, app_data: int | str) -> int:
         self.func()
         return 0
 
-class DrawObject(Drawable):
+class DrawObject(Drawable): # Not implemented class for Intersection, Road, Lane, etc
     def __init__(self, pos: Pos = (-1, -1),
                 parent: Optional[DrawObject] = None,
                 children: Optional[list[DrawObject]] = None) -> None:
@@ -36,7 +36,7 @@ class DrawObject(Drawable):
     def add_child(self, child: DrawObject) -> None:
         child.parent = self
         self.children.append(child)
-    def _draw_backplate(self, app_data: int | str) -> int:
+    def _draw_backplate(self, app_data: int | str) -> int: # Returns an int for parent var in dpg.draw_...
         o = dpg.draw_rectangle((*self.pos,), (*self.pos+(SIZE,SIZE),), parent=app_data, color=GRASS, fill=GRASS)
         if isinstance(o, int):
             return o

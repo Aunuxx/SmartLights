@@ -2,11 +2,15 @@ from __future__ import annotations
 from SmartLights.simulation import Engine, Position
 from SmartLights.simulation.draw import DrawObject, Drawable
 from SmartLights.traffic.constants import SIZE
+from SmartLights.simulation.file_manager import FileManager
 from typing import Iterator
 import numpy as np
+from SmartLights.traffic.road import Intersection
 
 WIDTH = 4
 HEIGHT = 4
+
+fm = FileManager()
 
 ROADSHAPE = dict(
     NE = 0,
@@ -45,7 +49,12 @@ class Simulation(Drawable):
 
     def set_cell(self, cell: tuple[int, int], data: DrawObject) -> None:
         self.grid[cell[0]][cell[1]] = data
+        if isinstance(data, Intersection):
+            data.pos = Position(*cell,)
+            fm.write_intersection(data)
+
     def rm_cell(self, cell: tuple[int, int]) -> None:
+        fm.rm_intersection(cell)
         self.grid[cell[0]][cell[1]] = DrawObject()
 
 
