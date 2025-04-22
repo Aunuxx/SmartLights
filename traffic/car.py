@@ -1,20 +1,22 @@
-from SmartLights.traffic.constants import Direction
+from SmartLights.traffic.constants import ROTATION
 from SmartLights.traffic.road import Endpoint
 from SmartLights.simulation import Position
-import random
+from SmartLights.simulation.draw import DrawObject
 from math import atan2, degrees
+import dearpygui.dearpygui as dpg # type: ignore[import-untyped]
+import random
 
-class Vehicle:
+class Car(DrawObject):
     MAXSPEED: int = 200
     pos: Position
     vel: Position
     speed: int = 0
-    facing: int = 0 # int for granulatiry
+    facing: int = 0
+    """Cardinal direction, see constants.py for more information."""
     waiting: int = 0
     stopped: bool = True
     def __init__(self, endpoint: Endpoint) -> None:
-        self.pos = endpoint.pos
-        self.facing = endpoint.spawnDirection
+        self.pos = endpoint.pos + ROTATION[endpoint.dir]
 
     def angle(self, p1: tuple[int, int], p2: tuple[int, int]) -> float:
         """
@@ -24,6 +26,9 @@ class Vehicle:
         angle = degrees(atan2(dx, dy))
         return float(angle % 360)
 
+    def draw(self, app_data: int | str) -> int:
+        dpg.draw_rectangle((*self.pos-(20,20),), (*self.pos+(20,20),), parent=app_data, color=(255,0,255))
+        return 0
 
     # def tick(self) -> None:
     #     if self.stopped:
@@ -31,13 +36,13 @@ class Vehicle:
     #     self.facing = int(self.angle(self.pos, self.vel))
 
 
-class VehicleManager:
-    vehicles: list[Vehicle] = []
+class CarManager:
+    vehicles: list[Car] = []
     endpoints: list[Endpoint] = []
 
     def spawnCar(self) -> None:
         endpoint  = random.randint(0, len(self.endpoints))
-        v = Vehicle(self.endpoints[endpoint])
+        v = Car(self.endpoints[endpoint])
         
         self.vehicles.append(v)
 

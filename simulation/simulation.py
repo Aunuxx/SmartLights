@@ -27,6 +27,7 @@ CARDINAL = dict(
 class Simulation(Drawable):
     def __init__(self) -> None:
         self.grid = np.empty((WIDTH, HEIGHT), dtype=DrawObject)
+        self.engine = Engine()
         for x in range(len(self.grid)):
             for y in range(len(self.grid[x])):
                 self.grid[x][y] = DrawObject()

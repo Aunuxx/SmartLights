@@ -36,7 +36,7 @@ class DrawObject(Drawable):
     def add_child(self, child: DrawObject) -> None:
         child.parent = self
         self.children.append(child)
-    def draw_backplate(self, app_data: int | str) -> int:
+    def _draw_backplate(self, app_data: int | str) -> int:
         o = dpg.draw_rectangle((*self.pos,), (*self.pos+(SIZE,SIZE),), parent=app_data, color=GRASS, fill=GRASS)
         if isinstance(o, int):
             return o

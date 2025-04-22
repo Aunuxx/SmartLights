@@ -3,6 +3,8 @@ from enum import Enum
 SIZE = 250
 LANESIZE = SIZE/10
 
+CENTER = (SIZE/2,SIZE/2)
+
 GRASS = (19,109,21)
 STREET = (50,50,50)
 WHITE = (255,255,255)
@@ -22,6 +24,13 @@ DOTTEDROTATION: list[tuple[float,float]] = [
     (0, SIZE/13), 
     (-SIZE/13, 0)
     ]
+
+ENDPOINTROTATION: list[tuple[tuple[float, float], tuple[float, float], tuple[float, float]]] = [
+    ((SIZE/2, SIZE/5), (0, 0), (SIZE, 0)),
+    ((SIZE-SIZE/5, SIZE/2), (SIZE, 0), (SIZE, SIZE)),
+    ((SIZE/2, SIZE-SIZE/5), (SIZE, SIZE), (0, SIZE)),
+    ((SIZE/5, SIZE/2), (0, SIZE), (0, 0))
+]
 
 CardinalRoadShape: list[int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
