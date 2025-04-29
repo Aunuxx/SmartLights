@@ -2,16 +2,18 @@ from SmartLights.traffic.road import Road, Intersection, Lane
 from SmartLights.simulation import Position
 from SmartLights.simulation.draw import DrawObject
 
-road = Road((0,0), [[Lane((1, 1, 0), 0, 1)], [Lane((0, 1, 0), 0, 0)]], 15)
-# Road now accepets list[list[Road]] not list[Road],
-# list[list[Road]] oppeates as a list[tuple[Road, Road]]
+road = Road((0,0), [
+    [Lane((1, 1, 0), 0, 1)], [Lane((0, 1, 0), 0, 0)]
+    ], 15)
+# Road now accepets list[list[Lane]] not list[Lane]
+# list[list[Lane]] oppeates as a list[tuple[Lane, Lane]]
 # since python does not allow direct assignment to tuple
 
 
 assert isinstance(road.pos, Position)
 
-
-intersection = Intersection([]) # Intersection now dirives pos from sim array indexes on draw_update
+intersection = Intersection([])
+# Intersection now dirives pos from sim array indexes on draw_update
 
 assert isinstance(intersection.pos, Position)
 

@@ -63,10 +63,6 @@ sim.set_cell((1,0), Intersection([
     ]))
 
 
-
-def context_menu_callback(sender: int, app_data: int, user_data: int) -> None:
-    print(f"Menu item '{user_data}' clicked")
-
 def get_item_cell(user_data: int | str = "context_popup") -> tuple[int, int]:
     pos = dpg.get_item_pos(user_data)
     pos[1] = pos[1] - dpg.get_item_height(user_data)

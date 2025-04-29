@@ -22,7 +22,10 @@ class dpgDrawObject(Drawable): # Holds a dpg command for draw_list in gui
         self.func()
         return 0
 
-class DrawObject(Drawable): # Not implemented class for Intersection, Road, Lane, etc
+class DrawObject(Drawable): # Abstract class for Intersection, Road, Lane, etc
+    """
+    Abstract class
+    """
     def __init__(self, pos: Pos = (-1, -1),
                 parent: Optional[DrawObject] = None,
                 children: Optional[list[DrawObject]] = None) -> None:

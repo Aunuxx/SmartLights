@@ -29,6 +29,10 @@ class Lane(DrawObject):
 
 
 class Road(DrawObject):
+    """
+    Implemented by Intersection.
+    Defines Road draw locations relative to cell position.
+    """
     def __init__(self, pos: Pos, lanes: list[list[Lane]], shape: int):
         super().__init__(pos)
         self.shape = shape
@@ -116,6 +120,10 @@ class Endpoint(DrawObject):
 
 
 class Intersection(DrawObject):
+    """
+    What is stored as a cell in simulation.grid.
+    Implements Road and Endpoint.
+    """
     def __init__(self, lanes: list[Lane]):
         super().__init__()
         self.endpoints: list[Endpoint] = [Endpoint(), Endpoint(), Endpoint(), Endpoint()]

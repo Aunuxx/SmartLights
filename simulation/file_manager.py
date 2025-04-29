@@ -79,7 +79,7 @@ class FileManager:
                     sSide += 1
                 if lane.side == 3:
                     wSide += 1
-        print(intersection.pos)
+
 
         cs["Intersections"][int(intersection.pos[0]/SIZE)][int(intersection.pos[1]/SIZE)] = dict( # type: ignore[index,assignment]
             cellX = int(intersection.pos[0]/SIZE),
