@@ -1,3 +1,5 @@
+# *this project was for a class*
+
 # SmartLights
 SmartLights is a road simulation framwork made to emulate traffic lights.  
 The projects end goal is to utilized the simulation to display a better light
